@@ -1,5 +1,7 @@
 package com.curso.dao;
 
+import java.util.List;
+
 import com.curso.entidades.Empleado;
 
 /**
@@ -28,6 +30,6 @@ public interface EmpleadoDAO  {
 
 	Empleado getById(int id);
 	
-	// List<Empleado> getAll();
+	 List<Empleado> getAll();
 	//Este falta. 
 }

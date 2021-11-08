@@ -1,8 +1,11 @@
 package com.curso.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.curso.entidades.Empleado;
 
@@ -55,5 +58,19 @@ public class EmpleadoJPADAO implements EmpleadoDAO
 	}
 
 
+	public List<Empleado> getAll(){
+		//consulta
+		String consulta = "SELECT e from Empleado e";
+		Query query = em.createQuery(consulta);
+		
+//		Query query = em.createNamedQuery("Empleado.findAll");
+		return query.getResultList(); 
+
+		
+		//DEVUELVE UNA COLECCION DE EMPLEADOS
+		//SI NO HAY DEVUELVE UNA COLECCION VACIA
+	}
+	
+	
 
 }
