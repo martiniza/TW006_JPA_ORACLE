@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+
+import org.apache.derby.impl.tools.ij.Main;
 
 import com.curso.dao.EmpleadoDAO;
 import com.curso.dao.EmpleadoJPADAO;
@@ -59,7 +62,6 @@ public class GestionEmpleadosService  {
 			//cal.set(2021,Calendar.NOVEMBER, 1);
 			Date fecha2 = cal.getTime();
 	
-			
 
 			Empleado e = new Empleado(nombre, apellido, "email", Telefono, fecha2, 
 					idJob,salario, 0.3d, 200, 10);
@@ -76,6 +78,21 @@ public class GestionEmpleadosService  {
 		
 	}
 	
+	public List<Empleado> getAllEmpleadoPorDpto(int idDepartamento){
+		//Vamos a preparar una query que pregunte por los empleados 
+		//dentro del departamento
+		
+		EntityManager em= EmpleadoJPADAO.factory.createEntityManager();
+		
+	
+		Query query = em.createNamedQuery("Empleado.findAllByIdDept");
+		
+		query.setParameter("id", idDepartamento);
+		
+		
+		return query.getResultList() ;
+	}
+	
 	public void informeEmpleados() {
 		EntityManager em = EmpleadoJPADAO.factory.createEntityManager();
 		EmpleadoDAO dao = new EmpleadoJPADAO(em);
@@ -86,6 +103,36 @@ public class GestionEmpleadosService  {
 			System.out.println(". "+ e.getId() + " " + e.getFirstName());
 		}
 		
+	
+	}
+	
+	
+	public List<Empleado> getEmpleadosParaListar(){
+		EntityManager em= EmpleadoJPADAO.factory.createEntityManager();		
+		Query query = em.createNamedQuery("Empleado.findAllDatosBasicos");
+			
+		return query.getResultList() ;
 		
+	}
+	
+	public static void main(String[] args) {
+		
+		GestionEmpleadosService service = new GestionEmpleadosService();
+		service.informeEmpleados();
+		
+		List<Empleado> empleadosDptoAdm = service.getAllEmpleadoPorDpto(10);
+		
+		for(Empleado e: empleadosDptoAdm) {
+			System.out.println(". "+ e.getId() + " " + e.getFirstName());
+		}
+		
+		System.out.println("___ lista empleados ___");
+		
+		List<Empleado> lista = service.getEmpleadosParaListar();
+		
+		for(Empleado e: lista) {
+			System.out.println(". "+ e.getId() + " " + e.getFirstName() 
+			+ " " + e.getLastName());
+		}
 	}
 }

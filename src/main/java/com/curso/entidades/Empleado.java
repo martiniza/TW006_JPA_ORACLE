@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,6 +18,22 @@ import com.curso.dao.EmpleadoDAO;
 
 @Entity
 @Table(name="EMPLOYEES")
+
+@NamedQueries({
+    @NamedQuery(name = "Empleado.findAll",  // convenio para localizar la query
+        query = "SELECT e FROM Empleado e"),
+    
+    @NamedQuery(name = "Empleado.findAllByIdDept", 
+    	query = "SELECT e FROM Empleado e WHERE e.depId = :id")
+    , 
+    @NamedQuery(name = "Empleado.findAllDatosBasicos", 
+		query = "SELECT new com.curso.entidades.Empleado (e.id, e.firstName, e.lastName)"
+    + "FROM Empleado e ") 
+
+})
+// :id es un parámetro
+//ORDER BY id
+
 
 public class Empleado implements  Serializable {
 	
@@ -82,6 +100,18 @@ public class Empleado implements  Serializable {
 		this.depId = depId;
 	}
 	
+	
+	
+
+	public Empleado(Long id, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+
+
 
 	public Empleado() {
 		super();

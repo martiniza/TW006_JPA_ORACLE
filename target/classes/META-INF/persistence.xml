@@ -29,7 +29,10 @@
         <class>com.curso.jpa.CursoJPA.domain.Trabajo</class>
         
         	<class>com.curso.entidades.Trabajo</class>
-        	<class>com.curso.entidades.Empleado</class>     
+        	<class>com.curso.entidades.Empleado</class> 
+        	<class>com.curso.entidades.Customer</class>     
+        	<class>com.curso.entidades.Record</class> 
+        	<class>com.curso.entidades.Orders</class> 
         	   	
         <properties>
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
@@ -40,11 +43,14 @@
 
             <!-- EclipseLink should create the database schema automatically -->
             <property name="eclipselink.logging.level" value="FINE"/> 
-            <property name="eclipselink.exclude-eclipselink-orm" value="true"/>                
+            <property name="eclipselink.exclude-eclipselink-orm" value="true"/>
+            <property name="eclipselink.ddl-generation" value="create-tables" />           
         </properties>
 
  
 
     </persistence-unit>
+    
+    
     
     </persistence>
